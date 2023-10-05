@@ -25,7 +25,7 @@ captured_pieces_black = []
 turn_step = 0
 selection = 100
 valid_moves = []
-
+#Перенос иконок
 black_queen = pygame.image.load('C:\\Users\\Admin\\PycharmProjects\\pythonProject2\\images\\queenb.png')
 black_queen = pygame.transform.scale(black_queen, (80, 80))
 black_queen_small = pygame.transform.scale(black_queen, (45, 45))
@@ -74,7 +74,7 @@ counter = 0
 winner = ''
 game_over = False
 
-
+#функция доски
 def draw_board():
     for i in range(32):
         column = i % 4
@@ -93,7 +93,7 @@ def draw_board():
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
         screen.blit(medium_font.render('СДАЮСЬ', True, 'black'), (805, 830))
-
+#функция траектории
 def draw_pieces():
     for i in range(len(white_pieces)):
         index = piece_list.index(white_pieces[i])
@@ -115,7 +115,7 @@ def draw_pieces():
             if selection == i:
                 pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
                                                   100, 100], 2)
-
+#функция опций
 def check_options(pieces, locations, turn):
     moves_list = []
     all_moves_list = []
@@ -136,7 +136,7 @@ def check_options(pieces, locations, turn):
             moves_list = check_king(location, turn)
         all_moves_list.append(moves_list)
     return all_moves_list
-
+#функция короля
 def check_king(position, color):
     moves_list = []
     if color == 'white':
@@ -151,7 +151,7 @@ def check_king(position, color):
         if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
             moves_list.append(target)
     return moves_list
-
+#функция слона
 def check_bishop(position, color):
     moves_list = []
     if color == 'white':
@@ -185,14 +185,14 @@ def check_bishop(position, color):
             else:
                 path = False
     return moves_list
-
+#функция королевы
 def check_queen(position, color):
     moves_list = check_bishop(position, color)
     second_list = check_rook(position, color)
     for i in range(len(second_list)):
         moves_list.append(second_list[i])
     return moves_list
-
+#функция коня
 def check_knight(position, color):
     moves_list = []
     if color == 'white':
@@ -207,7 +207,7 @@ def check_knight(position, color):
         if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
             moves_list.append(target)
     return moves_list
-
+#функция ладьи
 def check_rook(position, color):
     moves_list = []
     if color == 'white':
@@ -241,7 +241,7 @@ def check_rook(position, color):
             else:
                 path = False
     return moves_list
-
+#функция пешки
 def check_pawn(position, color):
     moves_list = []
     if color == 'white':
@@ -276,7 +276,7 @@ def check_valid_moves():
         options_list = black_options
     valid_options = options_list[selection]
     return valid_options
-
+#функция свечения
 def draw_valid(moves):
     if turn_step < 2:
         color = 'red'
@@ -314,7 +314,7 @@ def draw_check():
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
-
+#функция окончания игры
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
